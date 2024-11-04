@@ -1,0 +1,17 @@
+package deps
+
+var cssHandle = templ.NewOnceHandle()
+
+templ Css() {
+@cssHandle.Once() {
+<link href="/static/output.css" rel="stylesheet" />
+}
+}
+
+var htmxHandle = templ.NewOnceHandle()
+
+templ Htmx() {
+@htmxHandle.Once() {
+<script src="/static/htmx.min.js"></script>
+}
+}

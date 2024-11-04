@@ -1,0 +1,21 @@
+package components
+
+import (
+"github.com/zjom/zihanjin/pkg/blog"
+"strings"
+)
+
+templ Posts(posts []*blog.Metadata) {
+for _, post := range posts {
+<button class="flex flex-col space-y-1 mb-4 hover:cursor" hx-get={ "/blog/" + post.Slug }>
+	<div class="w-full flex flex-col md:flex-row space-x-0 md:space-x-2">
+		<p class="text-neutral-600 dark:text-neutral-400 w-[100px] tabular-nums">
+			{ post.PublishedAt.Format("2006-01-02") }
+		</p>
+		<p class="text-neutral-900 dark:text-neutral-100 tracking-tight">
+			{ strings.ToLower(post.Title) }
+		</p>
+	</div>
+</button>
+}
+}

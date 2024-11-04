@@ -1,0 +1,10 @@
+package components
+
+import "github.com/zjom/zihanjin/pkg/blog"
+
+templ BlogPage(posts []*blog.Metadata) {
+<section>
+	<h1 class="font-semibold text-2xl mb-8 tracking-tighter">My Blog</h1>
+	@Posts(posts)
+</section>
+}
