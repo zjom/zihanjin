@@ -9,8 +9,9 @@ type Article struct {
 }
 
 type Metadata struct {
-	Title      string
-	Slug       string
-	CreatedAt  time.Time
-	ModifiedAt time.Time
+	Title       string
+	Slug        string
+	Description string
+	CreatedAt   time.Time
+	ModifiedAt  time.Time
 }

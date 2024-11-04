@@ -164,6 +164,10 @@ func getMetadata(metaData map[string]interface{}) (*Metadata, error) {
 	if !ok {
 		return nil, ErrInvalidTitle
 	}
+	description, ok := metaData["description"].(string)
+	if !ok {
+		description = ""
+	}
 
 	created_at_str, ok := metaData["createdAt"].(string)
 	var (
@@ -189,10 +193,11 @@ func getMetadata(metaData map[string]interface{}) (*Metadata, error) {
 	}
 
 	return &Metadata{
-		Title:      title,
-		Slug:       slug.Make(title),
-		CreatedAt:  created_at,
-		ModifiedAt: modified_at,
+		Title:       title,
+		Slug:        slug.Make(title),
+		Description: description,
+		CreatedAt:   created_at,
+		ModifiedAt:  modified_at,
 	}, nil
 }
 
