@@ -1,0 +1,2 @@
+<link href=\"/static/output.css\" rel=\"stylesheet\">
+<script src=\"/static/htmx.min.js\"></script>
