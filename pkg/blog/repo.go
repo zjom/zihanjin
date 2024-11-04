@@ -6,6 +6,8 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"slices"
+	"strings"
 )
 
 type Repo interface {
@@ -14,15 +16,16 @@ type Repo interface {
 }
 
 func NewRepo(dir string) Repo {
-	fr := &fileRepo{dir, map[string]*Article{}, nil}
+	fr := &fileRepo{dir, map[string]*Article{}, nil, nil}
 
 	return fr
 }
 
 type fileRepo struct {
-	dir            string
-	loadedArticles map[string]*Article
-	metadatas      map[string]*Metadata
+	dir                     string
+	loadedArticles          map[string]*Article
+	metadatas               []*Metadata
+	creationSortedMetadatas []*Metadata
 }
 
 func (fr *fileRepo) GetArticle(slug string) (*Article, error) {
@@ -30,8 +33,8 @@ func (fr *fileRepo) GetArticle(slug string) (*Article, error) {
 		return a, nil
 	}
 
-	m, ok := fr.metadatas[slug]
-	if !ok {
+	m, found := find(fr.metadatas, slug)
+	if !found {
 		return nil, ErrSlugNotFound
 	}
 
@@ -54,7 +57,7 @@ func (fr *fileRepo) GetMetaDatas() ([]*Metadata, error) {
 		}
 	}
 
-	return values(fr.metadatas), nil
+	return fr.creationSortedMetadatas, nil
 }
 
 func (fr *fileRepo) loadMetaData() error {
@@ -73,12 +76,22 @@ func (fr *fileRepo) loadMetaData() error {
 		return err
 	}
 
-	m := map[string]*Metadata{}
-	for _, md := range metadatas {
-		m[md.Slug] = md
-	}
+	slices.SortFunc(metadatas, func(a, b *Metadata) int {
+		return strings.Compare(a.Slug, b.Slug)
+	})
+	fr.metadatas = metadatas
 
-	fr.metadatas = m
+	creationSorted := slices.Clone(metadatas)
+	slices.SortFunc(creationSorted, func(a, b *Metadata) int {
+		if a.CreatedAt.Before(b.CreatedAt) {
+			return -1
+		}
+		if a.CreatedAt.After(b.CreatedAt) {
+			return 1
+		}
+		return 0
+	})
+	fr.creationSortedMetadatas = creationSorted
 	return nil
 }
 
@@ -86,11 +99,13 @@ var (
 	ErrSlugNotFound = errors.New("error slug not found")
 )
 
-func values(m map[string]*Metadata) []*Metadata {
-	retv := make([]*Metadata, 0)
-	for _, v := range m {
-		retv = append(retv, v)
+func find(m []*Metadata, slug string) (*Metadata, bool) {
+	idx, found := slices.BinarySearchFunc(m, slug, func(val *Metadata, target string) int {
+		return strings.Compare(val.Slug, target)
+	})
+	if !found {
+		return nil, false
 	}
 
-	return retv
+	return m[idx], true
 }
