@@ -2,15 +2,15 @@ package blog
 
 import "time"
 
-type Blog struct {
-	Metadata
+type Article struct {
+	*Metadata
 
-	Content string
+	Content []byte
 }
 
 type Metadata struct {
-	Title       string
-	Slug        string
-	PublishedAt time.Time
-	EditedAt    time.Time
+	Title      string
+	Slug       string
+	CreatedAt  time.Time
+	ModifiedAt time.Time
 }

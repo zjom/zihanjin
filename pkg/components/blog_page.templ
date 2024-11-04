@@ -2,9 +2,25 @@ package components
 
 import "github.com/zjom/zihanjin/pkg/blog"
 
-templ BlogPage(posts []*blog.Metadata) {
-<section>
-	<h1 class="font-semibold text-2xl mb-8 tracking-tighter">My Blog</h1>
-	@Posts(posts)
-</section>
+templ BlogPageHome(posts []*blog.Metadata) {
+	<section id="content">
+		<h1 class="font-semibold text-2xl mb-8 tracking-tighter">my blog</h1>
+		@Posts(posts)
+	</section>
+}
+
+templ BlogPageArticle(post *blog.Article) {
+	<section id="content">
+		<h1 class="title font-semibold text-2xl tracking-tighter">
+			{ post.Metadata.Title }
+		</h1>
+		<div class="flex justify-between items-center mt-2 mb-8 text-sm">
+			<p class="text-sm text-neutral-600 dark:text-neutral-400">
+				{ post.CreatedAt.Format("2006-01-02") }
+			</p>
+		</div>
+		<article class="prose">
+			@templ.Raw(string(post.Content))
+		</article>
+	</section>
 }

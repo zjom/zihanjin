@@ -28,7 +28,7 @@ func Landing(posts []*blog.Metadata) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<section id=\"content\"><h1 class=\"mb-8 text-2xl font-semibold tracking-tighter\">welcome</h1><p class=\"mb-4\">hello, i'm zihan – a passionate and driven developer dedicated to crafting innovative and efficient solutions. with a deep commitment to clean code, seamless user experiences, and continuous learning, i specialize in turning complex problems into elegant software. explore my portfolio to see projects that highlight my journey through development, showcasing a blend of creativity, technical expertise, and real-world problem-solving.</p><div class=\"my-8\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -36,7 +36,7 @@ func Landing(posts []*blog.Metadata) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></section>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

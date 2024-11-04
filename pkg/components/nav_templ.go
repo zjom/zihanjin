@@ -26,7 +26,7 @@ func Nav() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<aside class=\"-ml-[8px] mb-16 tracking-tight\"><div class=\"lg:sticky lg:top-20\"><nav class=\"flex flex-row items-start relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative\" id=\"nav\"><div class=\"flex flex-row space-x-0 pr-10\"><a href=\"/\" class=\"transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1\">home</a></div><div class=\"flex flex-row space-x-0 pr-10\"><a href=\"/blog\" class=\"transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1\">blog</a></div><div class=\"flex flex-row space-x-0 pr-10\"><a href=\"/projects\" class=\"transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1\">projects</a></div><div class=\"flex flex-row space-x-0 pr-10\"><a href=\"/about\" class=\"transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1\">about</a></div></nav></div></aside>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
