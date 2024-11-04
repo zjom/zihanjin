@@ -9,10 +9,12 @@ import (
 	"path/filepath"
 	"time"
 
+	chromahtml "github.com/alecthomas/chroma/v2/formatters/html"
 	"github.com/gosimple/slug"
 	"github.com/pkg/errors"
 	img64 "github.com/tenkoh/goldmark-img64"
 	"github.com/yuin/goldmark"
+	highlighting "github.com/yuin/goldmark-highlighting/v2"
 	meta "github.com/yuin/goldmark-meta"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
@@ -99,7 +101,7 @@ func folderExists(path string) bool {
 }
 
 func writeToFile(path string, data []byte) error {
-	f, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, 0644)
+	f, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
 	if err != nil {
 		return err
 	}
@@ -125,6 +127,12 @@ func (g *generator) parse(source []byte) (*Article, error) {
 			),
 			meta.Meta,
 			img64.Img64,
+			highlighting.NewHighlighting(
+				highlighting.WithStyle("monokai"),
+				highlighting.WithFormatOptions(
+					chromahtml.WithLineNumbers(true),
+				),
+			),
 		),
 		goldmark.WithParserOptions(parser.WithAutoHeadingID()),
 		goldmark.WithRendererOptions(img64.WithParentPath(g.inDirectory)),
