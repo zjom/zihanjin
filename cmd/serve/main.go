@@ -2,7 +2,8 @@ package main
 
 import (
 	"flag"
-	"log"
+	"fmt"
+	"os"
 
 	"github.com/labstack/echo/v4"
 	"github.com/zjom/zihanjin/pkg/blog"
@@ -10,8 +11,9 @@ import (
 )
 
 var (
-	inDir  = flag.String("in", "md/in", "the directory containing the markdown files")
-	outDir = flag.String("out", "md/out", "the directory to dump the html files")
+	inDir    = flag.String("in", "md/in", "the directory containing the markdown files")
+	outDir   = flag.String("out", "md/out", "the directory to dump the html files")
+	generate = flag.Bool("generate", true, "whether or not to generate the static files")
 )
 
 func main() {
@@ -19,13 +21,17 @@ func main() {
 
 	g := blog.NewGenerator(*inDir)
 	if err := g.Generate(*outDir); err != nil {
-		log.Fatalln(err)
+		fmt.Fprintf(os.Stderr, "failed to generate blog, error: %s\n", err)
+		os.Exit(1)
+		return
 	}
 
 	r := blog.NewRepo("md/out")
 	metadatas, err := r.GetMetaDatas()
 	if err != nil {
-		panic(err)
+		fmt.Fprintf(os.Stderr, "failed to get metadatas, error: %s\n", err)
+		os.Exit(1)
+		return
 	}
 
 	e := echo.New()
