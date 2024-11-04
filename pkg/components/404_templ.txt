@@ -1,0 +1,1 @@
+<section id=\"content\"><h1 class=\"title font-semibold text-2xl tracking-tighter\">404</h1><div class=\"flex justify-between items-center mt-2 mb-8 text-sm\"><p class=\"text-sm text-neutral-600 dark:text-neutral-400\">idk how you got here but you gotta go</p></div><img src=\"/static/chungus.png\" alt=\"chungus\"></section>
